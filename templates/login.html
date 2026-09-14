@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<h2>Acesso Restrito - Administração</h2>
+
+{% if erro %}
+    <p style="color: #dc2626; font-weight: bold; margin-bottom: 15px;">{{ erro }}</p>
+{% endif %}
+
+<form method="POST" style="max-width: 350px;">
+    <div class="form-group">
+        <label for="senha">Senha de Acesso:</label>
+        <input type="password" id="senha" name="senha" placeholder="Padrão: admin123" required>
+    </div>
+
+    <div class="btn-actions">
+        <button type="submit" class="btn btn-primary">Entrar</button>
+        <a href="{{ url_for('listar_sugestoes') }}" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<h2>{{ sugestao.titulo }}</h2>
+
+<p>
+    <strong>Categoria:</strong> {{ sugestao.categoria }} &bull; 
+    <strong>Data:</strong> {{ sugestao.data_criacao }} &bull;
+    <strong>Situação:</strong> 
+    <span class="badge badge-pendente">{{ sugestao.situacao }}</span>
+</p>
+
+<h3>Descrição</h3>
+<p>{{ sugestao.descricao }}</p>
+
+<hr>
+
+<h3>Resposta da Coordenação</h3>
+<div class="card-box">
+    <p>{{ sugestao.resposta if sugestao.resposta else 'Ainda não há resposta oficial registrada.' }}</p>
+</div>
+
+<div class="btn-actions">
+    <!-- Botão de gerenciar/responder exclusivo para quem está logado como admin -->
+    {% if is_admin %}
+        <a href="{{ url_for('responder_sugestao', id_sugestao=sugestao.id) }}" class="btn btn-primary">
+            Responder / Situação (Admin)
+        </a>
+    {% endif %}
+
+    <!-- O aluno pode editar os dados da própria sugestão -->
+    <a href="{{ url_for('editar_sugestao', id_sugestao=sugestao.id) }}" class="btn btn-secondary">Editar</a>
+
+    <form method="POST" action="{{ url_for('excluir_sugestao', id_sugestao=sugestao.id) }}" onsubmit="return confirm('Deseja realmente excluir esta sugestão?');">
+        <button type="submit" class="btn btn-danger">Excluir</button>
+    </form>
+
+    <a href="{{ url_for('listar_sugestoes') }}" class="btn btn-secondary">Voltar</a>
+</div>
+{% endblock %}

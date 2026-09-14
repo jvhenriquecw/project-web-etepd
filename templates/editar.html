@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<h2>Editar Sugestão #{{ sugestao.id }}</h2>
+
+<form method="POST">
+    <div class="form-group">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" value="{{ sugestao.titulo }}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="categoria">Categoria:</label>
+        <select id="categoria" name="categoria" required>
+            <option value="Infraestrutura" {% if sugestao.categoria == 'Infraestrutura' %}selected{% endif %}>Infraestrutura</option>
+            <option value="Pedagógico" {% if sugestao.categoria == 'Pedagógico' %}selected{% endif %}>Pedagógico</option>
+            <option value="Alimentação" {% if sugestao.categoria == 'Alimentação' %}selected{% endif %}>Alimentação</option>
+            <option value="Outros" {% if sugestao.categoria == 'Outros' %}selected{% endif %}>Outros</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" rows="5" required>{{ sugestao.descricao }}</textarea>
+    </div>
+
+    <div class="btn-actions">
+        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        <a href="{{ url_for('detalhes_sugestao', id_sugestao=sugestao.id) }}" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

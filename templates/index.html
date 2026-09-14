@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<h2>Sugestões dos Alunos</h2>
+
+{% if sugestoes %}
+<table>
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Categoria</th>
+            <th>Situação</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in sugestoes %}
+        <tr>
+            <td><strong>{{ s.titulo }}</strong></td>
+            <td>{{ s.categoria }}</td>
+            <td>
+                {% if s.situacao == 'Pendente' %}
+                    <span class="badge badge-pendente">{{ s.situacao }}</span>
+                {% elif s.situacao == 'Em Análise' %}
+                    <span class="badge badge-em-analise">{{ s.situacao }}</span>
+                {% elif s.situacao == 'Aprovada' %}
+                    <span class="badge badge-aprovada">{{ s.situacao }}</span>
+                {% elif s.situacao == 'Recusada' %}
+                    <span class="badge badge-recusada">{{ s.situacao }}</span>
+                {% else %}
+                    <span class="badge badge-concluida">{{ s.situacao }}</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ url_for('detalhes_sugestao', id_sugestao=s.id) }}">Detalhes</a> |
+                {% if is_admin %}
+                    <a href="{{ url_for('responder_sugestao', id_sugestao=s.id) }}">Responder</a>
+                {% else %}
+                    <a href="{{ url_for('editar_sugestao', id_sugestao=s.id) }}">Editar</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Nenhuma sugestão enviada até o momento.</p>
+{% endif %}
+{% endblock %}

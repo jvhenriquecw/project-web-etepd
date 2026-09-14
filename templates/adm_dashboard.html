@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h2>Painel Administrativo - Gestão de Sugestões</h2>
+    <a href="{{ url_for('logout_admin') }}" class="btn btn-danger">Sair do Modo ADM</a>
+</div>
+
+{% if sugestoes %}
+<table>
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Categoria</th>
+            <th>Situação Atual</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in sugestoes %}
+        <tr>
+            <td><strong>{{ s.titulo }}</strong></td>
+            <td>{{ s.categoria }}</td>
+            <td><span class="badge">{{ s.situacao }}</span></td>
+            <td>
+                <a href="{{ url_for('detalhes_sugestao', id_sugestao=s.id) }}">Ver</a> |
+                <a href="{{ url_for('responder_sugestao', id_sugestao=s.id) }}"><strong>Responder / Alterar Status</strong></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Nenhuma sugestão registrada até o momento.</p>
+{% endif %}
+{% endblock %}

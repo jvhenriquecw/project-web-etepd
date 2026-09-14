@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Sugestões</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <nav style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <a href="{{ url_for('listar_sugestoes') }}">📋 Ver Sugestões</a>
+                <a href="{{ url_for('nova_sugestao') }}">➕ Nova Sugestão</a>
+            </div>
+            <div>
+                {% if is_admin %}
+                    <a href="{{ url_for('modo_adm') }}">⚙️ Painel ADM</a>
+                    <a href="{{ url_for('logout_admin') }}" style="color: #dc2626;">Sair</a>
+                {% else %}
+                    <a href="{{ url_for('modo_adm') }}">🔒 Modo ADM</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        {% block conteudo %}{% endblock %}
+    </div>
+</body>
+</html>
